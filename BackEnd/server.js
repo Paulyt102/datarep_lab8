@@ -21,7 +21,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-const strConnection = 'mongodb+srv://admin:admin@cluster0.hrgmz.mongodb.net/MyFilms?retryWrites=true&w=majority';
+const strConnection = 'mongodb+srv://admin:admin@cluster0.8v8zb.mongodb.net/MyFilms>?retryWrites=true&w=majority';
+
 mongoose.connect(strConnection, {useNewUrlParser: true});
 
 const Schema = mongoose.Schema;
@@ -65,6 +66,17 @@ app.delete('/api/movies/:id', (req, res)=>{
     })
 })
 
+app.put('/api/movies/:id', function (req, res) {
+    console.log("Update Movie " + req.params.id); //update movie and particular id
+    console.log(req.body);
+    console.log(req.body.title);
+    console.log(req.body.year);
+    console.log(req.body.poster);
+    MovieModel.findByIdAndUpdate(req.params.id, req.body, {new: true},//creating a new record
+    function(err, data){
+    res.send(data);
+    })
+    })
 
 app.post('/api/movies', (req, res) => {
     console.log(req.body);
